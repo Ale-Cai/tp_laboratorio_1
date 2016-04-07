@@ -1,85 +1,60 @@
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
-int num1(x)
+
+//DECLARACION DE FUNCIONES
+int suma(int a, int b);
+int resta(int a, int b);
+float division(float a, float b);
+int multiplicacion(int a, int b);
+int factorial (int a);
+
+//DESARROLLO DE LAS FUNCIONES
+int suma(int a, int b) //Funcion sumar
 {
-    printf("Ingrese el 1er operando: ");
-    scanf("%d",&x);
-    system("pause");
-    system("cls");
-    return x;
-}
-int num2 (y)
+    int resultado;
+
+    resultado=a+b;
+    return resultado;
+}//Suma los operandos
+
+int resta(int a, int b) //Funcion restar
 {
-    printf("Ingrese el 2do operando: ");
-    scanf("%d",&y);
-    system("pause");
-    system("cls");
-    return y;
-}
-void suma (x,y)
+    int resultado;
+
+    resultado=a-b;
+    return resultado;
+}//Resta los operandos
+
+float division(float a, float b)
 {
-    printf("El resultado de la suma es: %d\n",x+y);
-    system("pause");
-    system("cls");
-}
-void resta (x,y)
+     float resultado;
+
+     resultado=a/b;
+     return resultado;
+
+}//Divide el primer operando por el segundo operando
+
+int multiplicacion(int a, int b) //Funcion multiplicar
 {
-    printf("El resultado de la resta es: %d\n",x-y);
-    system("pause");
-    system("cls");
-}
-void division (x,y)
+    int resultado;
+
+    resultado=a*b;
+    return resultado;
+}//Multiplica los operandos
+
+int factorial(int a) //Funcion factorial
 {
-    if(y==0)
-    {
-        printf("No se puede dividir entre 0\n");
-    }
-    else
-    {
-        printf("El resultado de la division es: %d\n",x/y);
-    }
-    system("pause");
-    system("cls");
-}
-void multiplicacion (x,y)
-{
-    printf("El resultado de la multiplicacion es: %d\n",x*y);
-    system("pause");
-    system("cls");
-}
-void factorial (x)
-{
-    int i,fac=x;
-    for(i=1;i<x;i++)
-    {
-        fac=fac*i;
-    }
-    printf("El numero factorial de %d es: %d",x,fac);
-    system("pause");
-    system("cls");
-}
-void todas(x,y)
-{
-    int i;
-    long fac=x;
-    for(i=1;i<x;i++)
-    {
-        fac=fac*i;
-    }
-    printf("Los resultados de cada operacion son: ");
-    printf("SUMA: %d\n",x+y);
-    printf("RESTA: %d\n",x-y);
-    if(y==0)
-    {
-        printf("DIVISION: Imposible dividir por 0\n");
-    }
-    else
-    {
-        printf("DIVISION: %d\n",x/y);
-    }
-    printf("MULTIPLICACION: %d\n",x*y);
-    printf("FACTORIAL DE %d: %ld\n",x,fac);
-    system("pause");
-    system("cls");
-}
+        int resultado;
+
+        if(a==1)
+        return 1;
+        resultado=a* factorial(a-1);
+        return (resultado);
+}//Calcula el factorial del primer operando
+
+
+
+
+
+
 #endif // FUNCIONES_H_INCLUDED
