@@ -14,3 +14,17 @@
 
 1473252222 e:\tps\trabajo_practico_uno\funciones.h
 
+1473277126 source:c:\users\ale\desktop\github\tp_laboratorio_1\tp_1\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<windows.h>
+
+1473277149 source:c:\users\ale\desktop\github\tp_laboratorio_1\tp_1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"funciones.h"
+
+1473252222 c:\users\ale\desktop\github\tp_laboratorio_1\tp_1\funciones.h
+

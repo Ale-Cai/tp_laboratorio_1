@@ -7,7 +7,7 @@ int main()
 {
    float num1=0, num2=0;
    int op, flag=0;
-   double resultado;
+
 
    while(flag==0)
    {
