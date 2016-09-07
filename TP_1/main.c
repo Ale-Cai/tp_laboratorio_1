@@ -1,133 +1,97 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
+#include<windows.h>
 #include "funciones.h"
 
 int main()
 {
-    char seguir='s';
-    int opcion, x=0, y=0;
-    float resp;
-    while(seguir=='s')
-    {
+   float num1=0, num2=0;
+   int op, flag=0;
+   double resultado;
+
+   while(flag==0)
+   {
         system("cls");
-        printf("\n1- Ingresar 1er operando (A=%d)\n",x);
-        printf("2- Ingresar 2do operando (B=%d)\n",y);
-        printf("3- Calcular la suma (A+B)\n", x,y);
-        printf("4- Calcular la resta (A-B)\n", x, y);
-        printf("5- Calcular la divisi%cn (A/B)\n", 162, x, y);
-        printf("6- Calcular la multiplicaci%cn (A*B)\n", 162, x, y);
-        printf("7- Calcular el factorial (A!)\n", x);
-        printf("8- Calcular todas las operaciones\n");
-        printf("9- Salir\n");
+        printf("MENU DE OPCIONES\n\n");
+        printf("1. Ingresar primer operando (A=%.3f)\n",num1);
+        printf("2. Ingresar segundo operando (B=%.3f)\n",num2);
+        printf("3. Sumar (A+B)\n");
+        printf("4. Restar(A-B)\n");
+        printf("5. Dividir (A/B)\n");
+        printf("6. Multiplicar (A*B)\n");
+        printf("7. Factorial (A!)\n");
+        printf("8. Calcular todas las operaciones\n");
+        printf("9. Salir\n");
 
-        printf("\nElija una opci%cn\n",162);
-        scanf("%d",&opcion);
-
-
-        while(opcion<1 || opcion>9) //Validacion de opciones entre 1 y 9.
-        {
-            printf("ERROR. Ingrese una opcion entre 1 y 9: ");
-            scanf("%d",& opcion);
-        }//Fin de la validacion.
-
-        switch(opcion)//Comienzo del switch para seleccionar la opcion.
-        {
-            case 1: //Carga del primer operando.
+        printf("\nElija una opcion: ");
+        scanf("%d",& op);
+            switch(op)
+            {
+            case 1:
                 system("cls");
-                printf("Ingrese 1er operando:\n");
-                scanf("%d",&x);
+                printf("Ingrese primer operando: ");
+                scanf("%f",& num1);
                 break;
-            case 2: //Carga del segundo operando.
+
+            case 2:
                 system("cls");
-                printf("Ingrese 2do operando:\n");
-                scanf("%d",&y);
+                printf("Ingrese segundo operando: ");
+                scanf("%f",& num2);
                 break;
-            case 3: //Suma.
+
+            case 3:
                 system("cls");
-                resp= suma(x,y);
-                printf("\nLa suma es: %.0f\n", resp);
+                sumar(num1, num2);
                 system("pause");
                 break;
-            case 4: //Resta.
+
+            case 4:
                 system("cls");
-                resp=resta(x,y);
-                printf("\nLa resta es: %.0f\n", resp);
+                restar(num1, num2);
                 system("pause");
                 break;
-            case 5: //Division.
+
+            case 5:
                 system("cls");
-                 if(y==0)
-                    {
-                        printf("No se puede dividir entre 0, reingrese el segundo operando\n"); //Si el segundo operando es "0" se muestra el mensaje de error.
-                        system("pause");
-                    }
-                 else
-                    {
-                        resp=division(x,y);
-                        printf("\nLa division es: %.2f\n", resp);
-                        system("pause");
-                    }
-                break;
-            case 6: //Multiplicacion
-                system("cls");
-                resp=multiplicacion(x,y);
-                printf("\nLa multiplicacion es: %.0f\n", resp);
+                dividir(num1, num2);
                 system("pause");
                 break;
-            case 7: //Factorial.
+
+            case 6:
                 system("cls");
-                if(x<1)
-                {
-                    printf("\nERROR. Ingrese un numero positivio para calcular factorial.\n");
-                    system("pause");
-                }
-                else
-                {
-                resp=factorial(x);
-                printf("\nEl factorial de %d es: %.0f\n", x, resp);
-                system("pause");
-                }
-                break;
-            case 8: //Todas las operaciones.
-                system("cls");
-                resp=suma( x, y);
-                printf("\nLa suma es: %.0f\n", resp);
-                resp=resta(x, y);
-                printf("\nLa resta es: %.0f\n", resp);
-                resp=division( x, y);
-                if(y==0)
-                {
-                    printf("\nNo se puede dividir entre 0, reingrese el segundo operando\n");
-                }
-
-                 else
-                 {
-                    resp=division(x,y);
-                    printf("\nLa division es: %.2f\n", resp);
-                 }
-
-                resp=multiplicacion(x,y);
-                printf("\nLa multiplicacion es: %.0f\n", resp);
-                if(x<1)
-                {
-                    printf("ERROR. Ingrese un numero positivio para calcular factorial.\n");
-                }
-
-                else
-                {
-                resp=factorial(x);
-                printf("\nEl factorial de %d es: %.0f\n", x, resp);
-                }
-
+                multiplicar(num1, num2);
                 system("pause");
                 break;
-            case 9: //Salida de la calculadora.
-                seguir = 'n';
+
+            case 7:
+                system("cls");
+                validar_factorial(num1);
+                system("pause");
                 break;
-        }//Fin del switch
 
-    }//Fin del while
-            return 0;
+            case 8:
+                system("cls");
+                sumar(num1, num2);
+                restar(num1, num2);
+                dividir(num1, num2);
+                multiplicar(num1, num2);
+                validar_factorial(num1);
+                system("pause");
+                break;
 
-}//Final del main
+            case 9:
+                flag=1;
+                break;
+
+            default:
+                system("cls");
+                printf("ERROR. Ingrese una opcion valida (Entre 0 y 9)\n");
+                system("pause");
+
+            }
+
+        }
+
+        return 0;
+}
+
