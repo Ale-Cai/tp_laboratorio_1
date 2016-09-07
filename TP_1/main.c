@@ -85,7 +85,7 @@ int main()
 
             default:
                 system("cls");
-                printf("ERROR. Ingrese una opcion valida (Entre 0 y 9)\n");
+                printf("ERROR. Ingrese una opcion valida (Entre 1 y 9)\n");
                 system("pause");
 
             }
