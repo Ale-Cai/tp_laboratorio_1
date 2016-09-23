@@ -1,324 +1,326 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
-#include <conio.h>
-#include <windows.h>
-#include <string.h>
+#include<ctype.h>
+#include<conio.h>
+#include<string.h>
+#include<windows.h>
 #include "funciones.h"
-#define D 4
 
-    EPersona lista[D];
-    int men18=0, e18y35=0, may35=0;
 
 /**
- * Obtiene el primer indice libre del array.
- * @param lista el array se pasa como parametro.
- * @return el primer indice disponible.
+ * \brief Inicializa todos los estados del array.
+ * \param lista el array se pasa como parametro.
+ * \param tam tamaño del array pasado anteriormente.
+ * \return No devuelve ningun valor.
  */
-int buscarEstado(EPersona lista[])
+void inicializarEstado(EPersona lista[], int tam)
 {
-    int i, pos=-1;
-    for(i=0; i<D; i++)
+    int i;
+
+    for(i=0; i<tam; i++)
+    {
+        lista[i].estado=0;
+    }
+}
+
+/**
+ * \brief Obtiene el primer indice libre del array.
+ * \param lista el array se pasa como parametro.
+ * \param tam tamaño del array pasado anteriormente.
+ * \return el primer indice disponible
+ */
+int obtenerEspacioLibre(EPersona lista[], int tam)
+{
+    int i;
+
+    for(i=0; i<tam; i++)
     {
         if(lista[i].estado==0)
-        {
-            pos=i;
-            break;
-        }
 
+            return i;
     }
-    return pos;
+
+    return -1;
 }
 
 /**
- * Ingresa y valida que el DNI se encuentre entre los valores correctos.
- * @param documento el entero se pasa como parametro.
- * @return el DNI validado.
+ * \brief Comprueba que el dni pasado no haya sido ingresado antes.
+ * \param lista el array se pasa como parametro.
+ * \param tam tamaño del array pasado anteriormente.
+ * \param documento el dni a ser buscado en el array.
+ * \return Un dni que no fue ingresado.
  */
-long int ingresar_dni(long int documento)
+int buscarDuplicado(EPersona lista[], int tam, long int documento)
 {
-        printf("Ingrese DNI: ");
-        scanf("%ld",& documento);
+    int i;
 
-        while(documento<1000000 || documento > 99999999)
-        {
-            system("cls");
-
-            printf("\nError. Ingrese un DNI entre 1000000 y 99999999\n\n DNI: ");
-            scanf("%ld",&documento);
-        }
-        return documento;
-}
-
-/**
- * Valida que la edad se encuentre entre los valores correctos.
- * @param edad el entero se pasa como parametro.
- * @return la edad validada.
- */
-int ingresar_edad(int edad)
-{
-        printf("Ingresar edad: ");
-        scanf("%d",&edad);
-
-        while(edad<1 || edad > 120)
-        {
-            system("cls");
-            printf("\nError. Ingrese una edad entre 1 y 120: ");
-            scanf("%d",&edad);
-        }
-        return edad;
-}
-
-
-
-/**
- * Permite ingresar los datos una vez que se obtuvo el primer indice libre del array.
- * @param lista el array se pasa como parametro.
- */
-void altas(EPersona lista[])
-{
-
-    system("cls");
-    int i, pos, duplicado=0, auxEdad=0;
-    long int auxdni=0;
-
-    pos=buscarEstado(lista);
-    if(pos!=-1)
+    for(i=0; i<tam; i++)
     {
-       auxdni=ingresar_dni(auxdni);
-
-        for(i=0; i<D; i++)
+        while(documento == lista[i].dni)
         {
-            if(auxdni==lista[i].dni)
-            {
-                duplicado=1;
-
-            }
-            break;
+            printf("Error. Ese D.N.I ya ha sido ingresado\n\nReingrese: ");
+            scanf("%ld", &documento);
         }
-        if(duplicado==0)
+    }
+    return documento;
+}
+
+/**
+ * \brief Valida que la cadena de caracteres no sobrepase la longitud maxima.
+ * \param nombre cadena de caracteres que se debe validar.
+ * \param min Longitud mínima de la cadena.
+ * \param max Longitud máxima de la cadena.
+ * \return Una cadena de caracteres dentro de las longitudes pasadas.
+ */
+int validarNombre(char nombre[], int min, int max)
+{
+    while(strlen(nombre) < min || strlen(nombre) > max)
+    {
+        printf("Error. El nombre debe contener entre %d y %d caracteres\n\nReingrese nombre: ", min, max);
+        fflush(stdin);
+        gets(nombre);
+    }
+    return nombre[strlen(nombre)];
+
+}
+
+/**
+ * \brief Valida un numero dentro de un rango específico.
+ * \param edad entero que se debe validar.
+ * \param min el numero minimo que se puede ingresar.
+ * \param max el numero maximo que se puede ingresar.
+ * \return Un entero dentro del rango pasado.
+ */
+int validarEdad(int edad, int min, int max)
+{
+    while(edad < min || edad > max)
+    {
+        printf("Error. Ingrese una edad entre %d y %d: ", min, max);
+        scanf("%d", &edad);
+    }
+
+    return edad;
+}
+
+/**
+ * \brief Valida un dni dentro de los rangos permitidos.
+ * \param dni dni a validar.
+ * \param min el numero de dni minimo valido.
+ * \param max el numero de dni maximo valido.
+ * \return Un numero de dni entre los rangos pasados.
+ */
+int validarDni(long int dni, int min, int max)
+{
+     while(dni < min || dni > max)
+    {
+        printf("Error. Ingrese un DNI valido entre %d y %d: ", min, max);
+        scanf("%ld", &dni);
+    }
+
+    return dni;
+}
+
+/**
+ * \brief Agrega una persona al array pasado.
+ * \param lista array pasado como parametro.
+ * \param tam tamaño del array.
+ * \return No retorna ningun valor.
+ */
+void altas(EPersona lista[], int tam)
+{
+    int pos, auxEdad;
+    long int auxDni;
+    char auxNombre[70];
+
+    pos= obtenerEspacioLibre(lista, tam);
+
+        if(pos !=- 1)
         {
-            printf("Ingresar nombre: ");
+
+            printf("Ingrese nombre: ");
             fflush(stdin);
-            gets(lista[pos].nombre);
-            strlwr(lista[pos].nombre);
-            auxEdad=ingresar_edad(auxEdad);
-            if(auxEdad >= 18)
-            {
-                if(auxEdad >35)
-                {
-                    may35++;
-                }
-                else
-                {
-                    e18y35++;
-                }
+            gets(auxNombre);
+            validarNombre(auxNombre, 2, 49);
+            strcpy(lista[pos].nombre, auxNombre);
+            printf("\nIngrese edad: ");
+            scanf("%d", & auxEdad);
+            lista[pos].edad=validarEdad(auxEdad, 1, 120);
+            printf("\nIngrese DNI: ");
+            scanf("%ld", &auxDni);
+            auxDni= buscarDuplicado(lista, tam, auxDni);
+            lista[pos].dni=validarDni(auxDni, 1000000, 99999999);
+
+
+            lista[pos].estado= 1;
+
+               printf("\nLos datos se cargaron correctamente.\n");
+               system("pause");
             }
-            else
-            {
-                men18++;
-            }
-
-            lista[pos].edad=auxEdad;
-            lista[pos].dni=auxdni;
-            lista[pos].estado=1;
-
-        }
-        else
-        {
-            printf("ERROR. El DNI ya fue ingresado");
-
-        }
-    }
-
-    else
-	{
-		printf("No queda espacio");
-	}
-
-
-
-    system("pause");
-
-
-
-
-}
-
-/**
- * Valida la respuesta entre S y N.
- * @param respuesta el char se pasa como parametro.
- * @return la respuesta validada.
- */
-char validar_S_N(char respuesta)
-{
-          while(respuesta != 's' && respuesta != 'n' )
-          {
-              printf("\nError. Ingrese una respuesta valida. s/n");
-              respuesta=tolower(getch());
-          }
-          return respuesta;
-}
-
-
-/**
- * Busca por DNI y elimina los datos correspondientes al mismo si el usuario lo desea.
- * @param lista el array se pasa como parametro.
- */
-void borrar(EPersona lista[])
-{
-    long int auxdni;
-    int i, bandera=0;
-    char rta;
-
-    system("cls");
-    printf("Ingrese DNI que desea eliminar: ");
-    scanf("%ld",&auxdni);
-    for(i=0; i<D; i++)
-    {
-        if(auxdni==lista[i].dni)
-        {
-            printf("DNI: %ld\nNombre: %s\nEdad: %d\n",lista[i].dni, lista[i].nombre, lista[i].edad);
-            printf("Desea elminar estos datos? (Ingrese S o N)");
-            rta=tolower(getch());
-            validar_S_N(rta);
-            if(lista[i].edad >=18)
-            {
-                if(lista[i].edad > 35)
-                {
-                    may35--;
-                }
-                else
-                {
-                    e18y35--;
-                }
-            }
-            else
-            {
-                men18--;
-            }
-
-            if(rta=='s')
-            {
-                system("cls");
-                lista[i].estado=0;
-                printf("\nSe han eliminado los datos");
-                system("pause");
-            }
-            else
-            {
-                system("cls");
-                printf("\nLos datos no han sido eliminados");
-                system("pause");
-            }
-            bandera=1;
-            break;
-        }
-    }
-    if(bandera==0)
-    {
-        printf("El DNI ingresado no existe");
-        system("pause");
-    }
-}
-
-/**
- * Ordena e imprime en pantalla los datos de las personas en orden alfabetico.
- * @param lista el array se pasa como parametro.
- */
-void ordenar(EPersona lista[])
-{
-    int i,c;
-    EPersona auxNom;
-
-    for(i=0; i<D-1; i++)
-    {
-            for(c=i+1; c<D; c++)
-            {
-                if(strcmp(lista[i].nombre, lista[c].nombre)>0)
-                {
-                            auxNom=lista[i];
-                            lista[i]=lista[c];
-                            lista[c]=auxNom;
-
-                }
-            }
-    }
-
+        else{
             system("cls");
-            printf("Lista en orden alfabetico\n");
+            printf("ERROR. No hay espacio disponible para seguir cargando.\n");
+            system("pause");
+        }
+}
 
-            for(i=0; i<D; i++)
+
+/**
+ * \brief Obtiene el indice que coincide con el dni pasado por parametro.
+ * \param lista el array se pasa como parametro.
+ * \param tam tamaño del array pasado.
+ * \param dni el dni a ser buscado en el array.
+ * \return el indice en donde se encuentra el elemento que coincide con el parametro dni o [-1] si no se encontró coincidencia.
+ */
+int buscarPorDni(EPersona lista[], int tam, long int dni)
+{
+    int i;
+
+    for(i=0; i<tam; i++)
+    {
+        if(lista[i].dni == dni)
             {
-                if(lista[i].estado==1)
-                {
-                    strupr(lista[i].nombre);
-                    printf("\nNombre: %s\nDNI: %ld\nEdad: %d\n\n",lista[i].nombre, lista[i].dni, lista[i].edad);
-                }
-            }
-              system("pause");
+                return i;
 
+                break;
+             }
+    }
+    return -1;
 }
 
 /**
- * Imprime en pantalla un grafico que muestra la cantidad de personas y sus respectivas edades.
- * @param lista el array se pasa como parametro.
+ * \brief Elimina los datos de una persona elegida.
+ * \param lista el array se pasa como parametro.
+ * \param tam tamaño del array pasado.
+ * \return No retorna ningun valor.
  */
-void grafico(EPersona lista[])
+void borrarPersona(EPersona lista[], int tam)
 {
-    int i, flag=0, mayor;
+    int i;
+    char respuesta;
+    long int auxDni;
 
-        system("cls");
-        if(men18>e18y35 && men18> may35)
+    printf("Ingresar DNI de la persona que se desea eliminar.\n\nDNI: ");
+    scanf("%ld", &auxDni);
+
+    i= buscarPorDni(lista, tam, auxDni);
+
+    if(i != -1)
+    {
+        printf("Nombre: %s\nEdad: %d", lista[i].nombre, lista[i].edad);
+        printf("\nDesea eliminar estos datos? (S/N)");
+        respuesta=tolower(getch());
+
+        if(respuesta == 's')
         {
-            mayor=men18;
+            system("cls");
+            lista[i].estado = 0;
+            lista[i].dni = 0;
+            printf("Los datos han sido eliminados\n");
         }
-        else
-        {
-            if(e18y35>men18 && e18y35> may35)
-                mayor=e18y35;
-            else
-            {
-                mayor=may35;
-            }
+        else{
+            printf("Los datos no han sido eliminados\n");
         }
-
-        for(i=mayor; i>0; i--)
-        {
-            if(men18>= i)
-            {
-                printf(" * ");
-            }
-            if(e18y35>= i)
-            {
-                    printf("\t  *  ");
-                    flag=1;
-            }
-
-            if(may35>=i)
-            {
-                if(flag==0)
-                    printf("\t\t * ");
-             else
-            {
-                printf("\t * ");
-            }
-
-        }
-
-               printf("\n");
-        }
-
-        printf("<18\t18-35\t>35\n");
-        system("pause");
+     }
+     else{
+        printf("\nNo se ha encontrado el DNI ingresado\n");
+     }
 }
 
+/**
+ * \brief Ordena a las personas por nombre en orden alfabetico.
+ * \param lista el array se pasa como parametro.
+ * \param tam tamaño del array pasado.
+ * \return No retorna ningun valor.
+ */
+void listar(EPersona lista[], int tam)
+{
+    int i, j;
+    EPersona auxPersona;
+
+    for(i=0; i<tam-1; i++)
+    {
+        for(j=i+1; j<tam; j++)
+        {
+            if(strcmp(lista[i].nombre, lista[j].nombre)>0)
+            {
+                auxPersona=lista[i];
+                lista[i]=lista[j];
+                lista[j]=auxPersona;
+            }
+        }
+    }
+
+        printf("%s\t\t\t\t     DNI\tEDAD\n", "NOMBRE");
+
+    for(i=0; i<tam; i++)
+    {
+        if(lista[i].estado == 1)
+        printf("\n%-20s\t\t   %8ld\t %3d", lista[i].nombre, lista[i].dni, lista[i].edad);
+    }
+}
+
+/**
+ * \brief Muestra un grafico por pantalla de las personas de acuerdo a su edad.
+ * \param lista el array se pasa como parametro.
+ * \param tam tamaño del array pasado.
+ * \return No retorna ningun valor.
+ */
+void grafico(EPersona lista[], int tam)
+{
+    int i, mayor, flag=0, menor18=0, e18y35=0, mayor35=0;
 
 
+        for(i=0; i<tam; i++)
+        {
+            if(lista[i].estado != 0 && lista[i].edad > 35)
+                mayor35++;
 
+            if(lista[i].estado != 0 && lista[i].edad < 18)
+                menor18++;
 
+            if(lista[i].estado != 0 && lista[i].edad >= 18 && lista[i].edad <= 35)
+                e18y35++;
+        }
 
+        if(menor18 >= e18y35 && menor18 >= mayor35)
+        {
+            mayor=menor18;
+        }
+        else if(e18y35 >= menor18 && e18y35 >= mayor35)
+        {
+            mayor=e18y35;
+        }
+        else{
 
+            mayor=mayor35;
+        }
 
+        //Se imprime un '*' o un espacio.
+        for(i = mayor; i>0; i--)
+        {
+            if(menor18 >= i)
+                printf("  *");
 
+            if(e18y35 >= i)
+            {
+                printf("\t  *");
+                flag = 1;
+            }
 
+            if(mayor35 >= i)
+            {
+                if( flag == 0)
+                {
+                    printf("\t\t  *");
+                }
+                else{
+                    printf("\t *");
+                }
+            }
+
+            printf("\n");
+
+        }
+
+        printf("\n<18\t18-35\t>35\n");
+}

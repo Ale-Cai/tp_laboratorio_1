@@ -1,33 +1,18 @@
 # depslib dependency file v1.0
-1461863678 source:e:\utn\utn programacion\tp_2_cascara\tp_2_cascara\funciones.c
+1474598858 source:c:\users\ale\desktop\trabajo practico 2 segundo cuatrimestre\tp_2_cascara\funciones.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
 	<conio.h>
-	<windows.h>
 	<string.h>
-	"funciones.h"
-
-1461863440 e:\utn\utn programacion\tp_2_cascara\tp_2_cascara\funciones.h
-
-1461863212 source:e:\utn\utn programacion\tp_2_cascara\tp_2_cascara\main.c
-	<stdio.h>
-	<stdlib.h>
-	"funciones.h"
-
-1461891172 source:c:\users\ale\desktop\tp_2_cascara\tp_2_cascara\funciones.c
-	<stdio.h>
-	<stdlib.h>
-	<ctype.h>
-	<conio.h>
 	<windows.h>
-	<string.h>
 	"funciones.h"
 
-1461891039 c:\users\ale\desktop\tp_2_cascara\tp_2_cascara\funciones.h
-
-1461891366 source:c:\users\ale\desktop\tp_2_cascara\tp_2_cascara\main.c
+1474598966 source:c:\users\ale\desktop\trabajo practico 2 segundo cuatrimestre\tp_2_cascara\main.c
 	<stdio.h>
 	<stdlib.h>
 	"funciones.h"
+	<windows.h>
+
+1474597370 c:\users\ale\desktop\trabajo practico 2 segundo cuatrimestre\tp_2_cascara\funciones.h
 
