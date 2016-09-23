@@ -145,7 +145,7 @@ void altas(EPersona lista[], int tam)
             printf("\nIngrese edad: ");
             scanf("%d", & auxEdad);
             lista[pos].edad=validarEdad(auxEdad, 1, 120);
-            printf("\nIngrese DNI: ");
+            printf("\nIngrese DNI (sin puntos): ");
             scanf("%ld", &auxDni);
             auxDni= buscarDuplicado(lista, tam, auxDni);
             lista[pos].dni=validarDni(auxDni, 1000000, 99999999);
