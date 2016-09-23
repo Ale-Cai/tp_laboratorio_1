@@ -72,7 +72,7 @@ int buscarDuplicado(EPersona lista[], int tam, long int documento)
  * \param max Longitud máxima de la cadena.
  * \return Una cadena de caracteres dentro de las longitudes pasadas.
  */
-int validarNombre(char nombre[], int min, int max)
+char validarNombre(char nombre[], int min, int max)
 {
     while(strlen(nombre) < min || strlen(nombre) > max)
     {
@@ -145,7 +145,7 @@ void altas(EPersona lista[], int tam)
             printf("\nIngrese edad: ");
             scanf("%d", & auxEdad);
             lista[pos].edad=validarEdad(auxEdad, 1, 120);
-            printf("\nIngrese DNI (sin puntos): ");
+            printf("\nIngrese DNI: ");
             scanf("%ld", &auxDni);
             auxDni= buscarDuplicado(lista, tam, auxDni);
             lista[pos].dni=validarDni(auxDni, 1000000, 99999999);

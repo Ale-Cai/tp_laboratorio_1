@@ -15,7 +15,7 @@ typedef struct {
 void inicializarEstado(EPersona lista[], int tam);
 int obtenerEspacioLibre(EPersona lista[], int tam);
 int buscarDuplicado(EPersona lista[], int tam, long int documento);
-int validarNombre(char nombre[], int min, int max);
+char validarNombre(char nombre[], int min, int max);
 int validarEdad(int edad, int min, int max);
 int validarDni(long int dni, int min, int max);
 void altas(EPersona lista[], int tam);

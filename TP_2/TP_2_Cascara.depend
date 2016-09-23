@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1474598858 source:c:\users\ale\desktop\trabajo practico 2 segundo cuatrimestre\tp_2_cascara\funciones.c
+1474645410 source:c:\users\ale\desktop\trabajo practico 2 segundo cuatrimestre\tp_2_cascara\funciones.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
@@ -14,13 +14,5 @@
 	"funciones.h"
 	<windows.h>
 
-1474597370 c:\users\ale\desktop\trabajo practico 2 segundo cuatrimestre\tp_2_cascara\funciones.h
-
-1474598966 source:c:\users\ale\desktop\github\tp_laboratorio_1\tp_2\main.c
-	<stdio.h>
-	<stdlib.h>
-	"funciones.h"
-	<windows.h>
-
-1474597370 c:\users\ale\desktop\github\tp_laboratorio_1\tp_2\funciones.h
+1474645410 c:\users\ale\desktop\trabajo practico 2 segundo cuatrimestre\tp_2_cascara\funciones.h
 
