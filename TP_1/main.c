@@ -119,7 +119,7 @@ int main()
                 {
                     printf("El resultado de la suma es %.2f\n", sumar(num1, num2));
                     printf("El resultado de la resta es %.2f\n", restar(num1, num2));
-                    printf("El resultado de la division es %.2f\n", dividir(num1, num2));
+                    validarDivision(num1, num2);
                     printf("El resultado de la multiplicacion es %.2f\n", multiplicar(num1, num2));
                     validarFactorial(num1);
                 }

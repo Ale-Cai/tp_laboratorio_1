@@ -12,3 +12,16 @@
 
 1491497558 f:\2017\tps\tp1\tp_1_cascara\funciones.h
 
+1491496272 source:c:\users\ale\desktop\tp_laboratorio_1\tp_1\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"funciones.h"
+
+1491497558 c:\users\ale\desktop\tp_laboratorio_1\tp_1\funciones.h
+
+1491497582 source:c:\users\ale\desktop\tp_laboratorio_1\tp_1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+
