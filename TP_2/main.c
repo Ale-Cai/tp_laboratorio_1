@@ -1,86 +1,77 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "funciones.h"
-#include<windows.h>
-#define TAM 20 //tamaño del array de persona
+#define TAM 20
 
 int main()
 {
-    EPersona persona[TAM];
-    int opcion=0, flag=0, carga=0;
+    EPersona persona[20];
+    char seguir = 's';
+    int op = 0, flag = 0, carga = 0;
+    long int auxDni;
 
-    inicializarEstado(persona, TAM);
-
-    while(flag == 0)
-    {
+    do{
         system("cls");
         printf("1- Agregar persona\n");
         printf("2- Borrar persona\n");
         printf("3- Imprimir lista ordenada por nombre\n");
         printf("4- Imprimir grafico de edades\n\n");
         printf("5- Salir\n");
-        printf("\n\nElija una opcion:  ");
-        scanf("%d",&opcion);
 
-        switch(opcion)
+        scanf("%d",&op);
+
+        switch(op)
         {
             case 1:
                 system("cls");
-                altas(persona, TAM);
-                carga = 1;
-                break;
 
+                if(flag == 0){
+                    inicializarEstados(persona, TAM);
+                    flag = 1;
+                }
+                    agregarPersona(persona, TAM);
+                    carga = 1;
+                    system("pause");
+                break;
             case 2:
                 system("cls");
-
-                if(carga == 0)
-                {
-                    printf("ERROR. Cargue los datos primero.\n\n");
-                    system("pause");
-                }
+                if (carga == 0)
+                    printf("Debe ingresar algun dato primero\n");
                 else{
-                    borrarPersona(persona, TAM);
-                    system("pause");
+                    auxDni = getLongInt(auxDni, "Ingrese DNI a eliminar: ", "\n\nERROR. El DNI debe ser entre 1000000 y 99999999.\nReingrese: ", 100000, 99999999);
+                    borrarPersona(persona, auxDni, TAM);
                 }
-                    break;
+
+                system("pause");
+                break;
             case 3:
                 system("cls");
+                if (carga == 0)
+                    printf("Debe ingresar algun dato primero\n");
+                else
+                    ordenarPersonas(persona, TAM);
 
-                if(carga == 0)
-                {
-                    printf("ERROR. Cargue los datos primero.\n\n");
-                    system("pause");
-                }
-                else{
-                    listar(persona, TAM);
-                    system("pause");
-                }
-                    break;
-
+                system("pause");
+                break;
             case 4:
                 system("cls");
+                if (carga == 0)
+                    printf("Debe ingresar algun dato primero\n");
+                else
+                    graficoPersonas(persona, TAM);
 
-                if(carga == 0)
-                {
-                    printf("ERROR. Cargue los datos primero.\n\n");
-                    system("pause");
-                }
-                else{
-                    grafico(persona, TAM);
-                    system("pause");
-                }
-                break;
-
-            case 5:
-                flag = 1;
-                break;
-
-            default:
-                printf("Error. Ingrese una opcion valida.\n");
                 system("pause");
-
+                break;
+            case 5:
+                seguir = 'n';
+                break;
+            default:
+                system("cls");
+                printf("Opcion invalida. Elija una opcion entre 1 y 5\n");
+                system("pause");
         }
-    }
+
+    }while(seguir=='s');
 
     return 0;
 }

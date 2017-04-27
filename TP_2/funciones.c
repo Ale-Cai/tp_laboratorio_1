@@ -1,326 +1,331 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include<ctype.h>
-#include<conio.h>
-#include<string.h>
-#include<windows.h>
 #include "funciones.h"
 
 
-/**
- * \brief Inicializa todos los estados del array.
- * \param lista el array se pasa como parametro.
- * \param tam tamaño del array pasado anteriormente.
- * \return No devuelve ningun valor.
- */
-void inicializarEstado(EPersona lista[], int tam)
+int getInt(int input, char message[], char eMessage[], int lowLimit, int hiLimit)
 {
-    int i;
+    int aux;
 
-    for(i=0; i<tam; i++)
+    printf("%s", message);
+    scanf("%d", &aux);
+
+    while(aux < lowLimit || aux > hiLimit)
     {
-        lista[i].estado=0;
+        printf("%s", eMessage);
+        scanf("%d", &aux);
     }
+        input = aux;
+
+    return input;
+
 }
 
-/**
- * \brief Obtiene el primer indice libre del array.
- * \param lista el array se pasa como parametro.
- * \param tam tamaño del array pasado anteriormente.
- * \return el primer indice disponible
- */
-int obtenerEspacioLibre(EPersona lista[], int tam)
+
+int getFloat(float input, char message[], char eMessage[], float lowLimit, float hiLimit)
 {
-    int i;
+    float aux;
+    int retornar;
 
-    for(i=0; i<tam; i++)
+    printf("%s", message);
+    scanf("%f", &aux);
+
+    if(aux < lowLimit || aux > hiLimit)
     {
-        if(lista[i].estado==0)
-
-            return i;
+        printf("%s", eMessage);
+        retornar = -1;
+    }
+    else{
+        input = aux;
+        retornar = 0;
     }
 
-    return -1;
+    return retornar;
+
 }
 
-/**
- * \brief Comprueba que el dni pasado no haya sido ingresado antes.
- * \param lista el array se pasa como parametro.
- * \param tam tamaño del array pasado anteriormente.
- * \param documento el dni a ser buscado en el array.
- * \return Un dni que no fue ingresado.
- */
-int buscarDuplicado(EPersona lista[], int tam, long int documento)
-{
-    int i;
 
-    for(i=0; i<tam; i++)
-    {
-        while(documento == lista[i].dni)
-        {
-            printf("Error. Ese D.N.I ya ha sido ingresado\n\nReingrese: ");
-            scanf("%ld", &documento);
-        }
-    }
-    return documento;
-}
 
-/**
- * \brief Valida que la cadena de caracteres no sobrepase la longitud maxima.
- * \param nombre cadena de caracteres que se debe validar.
- * \param min Longitud mínima de la cadena.
- * \param max Longitud máxima de la cadena.
- * \return Una cadena de caracteres dentro de las longitudes pasadas.
- */
-char validarNombre(char nombre[], int min, int max)
+
+
+int getString(char* input, char message[], char eMessage[], int lowLimit, int hiLimit)
 {
-    while(strlen(nombre) < min || strlen(nombre) > max)
+    char aux[200];
+
+
+    printf("%s", message);
+    fflush(stdin);
+    gets(aux);
+
+    while(strlen(aux) < lowLimit || strlen(aux) > hiLimit)
     {
-        printf("Error. El nombre debe contener entre %d y %d caracteres\n\nReingrese nombre: ", min, max);
+        printf("%s", eMessage);
         fflush(stdin);
-        gets(nombre);
+        gets(aux);
     }
-    return nombre[strlen(nombre)];
+        strcpy(input,aux);
+
+    return 0;
 
 }
 
-/**
- * \brief Valida un numero dentro de un rango específico.
- * \param edad entero que se debe validar.
- * \param min el numero minimo que se puede ingresar.
- * \param max el numero maximo que se puede ingresar.
- * \return Un entero dentro del rango pasado.
- */
-int validarEdad(int edad, int min, int max)
+
+
+int getLongInt(long int input, char message[], char eMessage[], long int lowLimit, long int hiLimit)
 {
-    while(edad < min || edad > max)
+    long int aux;
+
+
+    printf("%s", message);
+    scanf("%ld", &aux);
+
+    while(aux < lowLimit || aux > hiLimit)
     {
-        printf("Error. Ingrese una edad entre %d y %d: ", min, max);
-        scanf("%d", &edad);
+        printf("%s", eMessage);
+        scanf("%ld", &aux);
     }
 
-    return edad;
+        input = aux;
+
+
+    return input;
+
 }
 
-/**
- * \brief Valida un dni dentro de los rangos permitidos.
- * \param dni dni a validar.
- * \param min el numero de dni minimo valido.
- * \param max el numero de dni maximo valido.
- * \return Un numero de dni entre los rangos pasados.
- */
-int validarDni(long int dni, int min, int max)
+
+char getSN(char message[], char eMessage[])
 {
-     while(dni < min || dni > max)
+    char aux;
+    printf("%s", message);
+    aux = tolower(getche());
+    while(aux != 's' && aux != 'n')
     {
-        printf("Error. Ingrese un DNI valido entre %d y %d: ", min, max);
-        scanf("%ld", &dni);
+        printf("%s", eMessage);
+        aux  = tolower(getche());
     }
+    return aux;
 
-    return dni;
 }
 
-/**
- * \brief Agrega una persona al array pasado.
- * \param lista array pasado como parametro.
- * \param tam tamaño del array.
- * \return No retorna ningun valor.
- */
-void altas(EPersona lista[], int tam)
-{
-    int pos, auxEdad;
-    long int auxDni;
-    char auxNombre[70];
-
-    pos= obtenerEspacioLibre(lista, tam);
-
-        if(pos !=- 1)
-        {
-
-            printf("Ingrese nombre: ");
-            fflush(stdin);
-            gets(auxNombre);
-            validarNombre(auxNombre, 2, 49);
-            strcpy(lista[pos].nombre, auxNombre);
-            printf("\nIngrese edad: ");
-            scanf("%d", & auxEdad);
-            lista[pos].edad=validarEdad(auxEdad, 1, 120);
-            printf("\nIngrese DNI: ");
-            scanf("%ld", &auxDni);
-            auxDni= buscarDuplicado(lista, tam, auxDni);
-            lista[pos].dni=validarDni(auxDni, 1000000, 99999999);
-
-
-            lista[pos].estado= 1;
-
-               printf("\nLos datos se cargaron correctamente.\n");
-               system("pause");
-            }
-        else{
-            system("cls");
-            printf("ERROR. No hay espacio disponible para seguir cargando.\n");
-            system("pause");
-        }
-}
-
-
-/**
- * \brief Obtiene el indice que coincide con el dni pasado por parametro.
- * \param lista el array se pasa como parametro.
- * \param tam tamaño del array pasado.
- * \param dni el dni a ser buscado en el array.
- * \return el indice en donde se encuentra el elemento que coincide con el parametro dni o [-1] si no se encontró coincidencia.
- */
-int buscarPorDni(EPersona lista[], int tam, long int dni)
+int mayusNombre(char name[])
 {
     int i;
 
-    for(i=0; i<tam; i++)
-    {
-        if(lista[i].dni == dni)
-            {
-                return i;
+    strlwr(name);
 
-                break;
-             }
+    name[0] = toupper(name[0]);
+
+    for(i=0; i<=(strlen(name)); i++)
+    {
+        if(name[i] == ' ')
+            name[i+1] = toupper(name[i+1]);
+
+
     }
+
+    return 0;
+
+}
+
+
+void inicializarEstados(EPersona lista[], int size)
+{
+    int i;
+
+    for(i=0; i<size; i++){
+
+        lista[i].estado = 0;
+    }
+
+}
+
+int obtenerEspacioLibre(EPersona lista[], int size)
+{
+    int i;
+
+    for(i=0; i<size; i++){
+
+        if(lista[i].estado == 0)
+        {
+            return i;
+        }
+    }
+
+    printf("\n\nERROR. No hay mas espacios disponibles");
+    return -1;
+
+}
+
+
+int buscarDuplicado(EPersona lista[], long int dni, int size)
+{
+    int index;
+
+
+        while((index = buscarPorDni(lista, dni, size)) != -1 )
+            dni = getLongInt(dni, "ERROR. El DNI ya fue ingresado\nReingrese: ", "ERROR. El DNI debe estar comprendido entre 1000000 y 99999999.\nReingrese: ", 1000000, 99999999);
+
+    return 1;
+
+}
+
+
+int agregarPersona(EPersona lista[], int size)
+{
+    int index, auxEdad = 0;
+    long int auxDni = 0;
+    char auxNombre[200];
+
+
+    if((index = obtenerEspacioLibre(lista, size)) != -1)
+    {
+        auxDni = getLongInt(auxDni, "Ingrese DNI: ", "\n\nERROR.El DNI debe estar comprendido entre 1000000 y 99999999.\nReingrese: ", 1000000, 99999999);
+        buscarDuplicado(lista, auxDni, size);
+        getString(auxNombre, "\nIngrese nombre: ", "\n\nERROR. El nombre debe tener entre 2 y 50 caracteres\nReingrese: ", 2, 50);
+        mayusNombre(auxNombre);
+        auxEdad = getInt(auxEdad, "\nIngrese edad: ", "\n\nERROR. La edad debe estar entre 0 y 115.\nReingrese edad: ", 0, 115);
+
+
+        lista[index].dni = auxDni;
+        strcpy(lista[index].nombre, auxNombre);
+        lista[index].edad = auxEdad;
+        lista[index].estado = 1;
+
+        printf("\n\nPersona agregada con exito.\n");
+    }
+
+
+    return 0;
+}
+
+int buscarPorDni(EPersona lista[], long int dni, int size)
+{
+    int i;
+
+
+        for(i=0; i<size; i++){
+
+            if(lista[i].dni == dni && lista[i].estado != 0)
+                return i;
+        }
     return -1;
 }
 
-/**
- * \brief Elimina los datos de una persona elegida.
- * \param lista el array se pasa como parametro.
- * \param tam tamaño del array pasado.
- * \return No retorna ningun valor.
- */
-void borrarPersona(EPersona lista[], int tam)
+
+int borrarPersona(EPersona lista[], long int dni, int size)
 {
-    int i;
-    char respuesta;
-    long int auxDni;
+    int index;
+    char resp;
 
-    printf("Ingresar DNI de la persona que se desea eliminar.\n\nDNI: ");
-    scanf("%ld", &auxDni);
-
-    i= buscarPorDni(lista, tam, auxDni);
-
-    if(i != -1)
-    {
-        printf("Nombre: %s\nEdad: %d", lista[i].nombre, lista[i].edad);
-        printf("\nDesea eliminar estos datos? (S/N)");
-        respuesta=tolower(getch());
-
-        if(respuesta == 's')
+        if((index = buscarPorDni(lista, dni, size)) == -1)
         {
-            system("cls");
-            lista[i].estado = 0;
-            lista[i].dni = 0;
-            printf("Los datos han sido eliminados\n");
+            printf("ERROR. No se encontro el DNI ingresqado");
+            return -1;
         }
-        else{
-            printf("Los datos no han sido eliminados\n");
+
+        printf("Nombre: %s", lista[index].nombre);
+        printf("\nDNI: %ld", lista[index].dni);
+        printf("\nEdad: %d", lista[index].edad);
+        resp = getSN("\n\nDesea eliminar los datos? (S/N) ", "\n\nERROR. Seleccione S o N");
+
+        if(resp == 's'){
+
+            lista[index].estado = 0;
+            printf("\nLos datos han sido eliminados correctamente.\n");
+            return 0;
         }
-     }
-     else{
-        printf("\nNo se ha encontrado el DNI ingresado\n");
-     }
+
+        else
+            printf("\nLos datos NO han sido eliminados\n");
+
+        return -1;
+
 }
 
-/**
- * \brief Ordena a las personas por nombre en orden alfabetico.
- * \param lista el array se pasa como parametro.
- * \param tam tamaño del array pasado.
- * \return No retorna ningun valor.
- */
-void listar(EPersona lista[], int tam)
+
+void mostrarPersonas(EPersona lista[], int size)
+{
+    int i;
+
+    for(i=0; i<size; i++){
+
+        if(lista[i].estado != 0){
+            printf("\n\nNombre: %s", lista[i].nombre);
+            printf("\nDNI: %ld", lista[i].dni);
+            printf("\nEdad: %d", lista[i].edad);
+        }
+
+    }
+
+}
+
+void ordenarPersonas(EPersona lista[], int size)
 {
     int i, j;
-    EPersona auxPersona;
+    EPersona aux;
 
-    for(i=0; i<tam-1; i++)
-    {
-        for(j=i+1; j<tam; j++)
-        {
-            if(strcmp(lista[i].nombre, lista[j].nombre)>0)
-            {
-                auxPersona=lista[i];
-                lista[i]=lista[j];
-                lista[j]=auxPersona;
+    for(i=0; i<size-1; i++){
+        for(j=i+1; j<size; j++){
+
+            if(strcmp(lista[i].nombre, lista[j].nombre) > 0){
+
+                aux = lista[i];
+                lista[i] = lista[j];
+                lista[j] = aux;
             }
         }
     }
 
-        printf("%s\t\t\t\t     DNI\tEDAD\n", "NOMBRE");
-
-    for(i=0; i<tam; i++)
-    {
-        if(lista[i].estado == 1)
-        printf("\n%-20s\t\t   %8ld\t %3d", lista[i].nombre, lista[i].dni, lista[i].edad);
-    }
+    mostrarPersonas(lista, size);
 }
 
-/**
- * \brief Muestra un grafico por pantalla de las personas de acuerdo a su edad.
- * \param lista el array se pasa como parametro.
- * \param tam tamaño del array pasado.
- * \return No retorna ningun valor.
- */
-void grafico(EPersona lista[], int tam)
+void graficoPersonas(EPersona lista[], int size)
 {
-    int i, mayor, flag=0, menor18=0, e18y35=0, mayor35=0;
+    int i, menores18 = 0, entre = 0, mayores35 = 0, contMax, flag = 0;
+
+    for(i=0; i<size; i++){
+
+        if(lista[i].estado == 1){
+
+            if(lista[i].edad < 18)
+                menores18++;
+            else if(lista[i].edad > 35)
+                mayores35++;
+            else
+                entre++;
 
 
-        for(i=0; i<tam; i++)
-        {
-            if(lista[i].estado != 0 && lista[i].edad > 35)
-                mayor35++;
-
-            if(lista[i].estado != 0 && lista[i].edad < 18)
-                menor18++;
-
-            if(lista[i].estado != 0 && lista[i].edad >= 18 && lista[i].edad <= 35)
-                e18y35++;
         }
+    }
 
-        if(menor18 >= e18y35 && menor18 >= mayor35)
-        {
-            mayor=menor18;
-        }
-        else if(e18y35 >= menor18 && e18y35 >= mayor35)
-        {
-            mayor=e18y35;
-        }
-        else{
+    if(menores18 >= entre && menores18 >= mayores35)
+        contMax = menores18;
+    else if(entre >= menores18 && entre >= mayores35)
+        contMax = entre;
+    else
+        contMax = mayores35;
 
-            mayor=mayor35;
-        }
+    for(i=contMax; i>0; i--){
 
-        //Se imprime un '*' o un espacio.
-        for(i = mayor; i>0; i--)
-        {
-            if(menor18 >= i)
+        if(i <= menores18)
                 printf("  *");
 
-            if(e18y35 >= i)
-            {
-                printf("\t  *");
-                flag = 1;
-            }
+        if(i <= entre){
+            printf("  \t*");
+            flag = 1;
+        }
 
-            if(mayor35 >= i)
-            {
-                if( flag == 0)
-                {
-                    printf("\t\t  *");
-                }
-                else{
-                    printf("\t *");
-                }
-            }
+        if(i <= mayores35){
+            if(flag == 0)
+                printf("\t\t  *");
+            else
+                printf("\t *");
+        }
+
 
             printf("\n");
 
-        }
+    }
 
-        printf("\n<18\t18-35\t>35\n");
+        printf("<18   18/35\t>35");
 }
+
+
